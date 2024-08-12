@@ -2,62 +2,60 @@
 
 <img src="./.assets/DogDayAndroid.png" width="200" height="175" alt="banner">
 
-<h1>Build Your Own Kernel with Github Action</h1>
-
-English | [中文](./README_cn.md)
+<h1>构建属于你自己的安卓内核镜像</h1>
 
 ![License](https://img.shields.io/static/v1?label=License&message=BY-NC-SA&logo=creativecommons&color=green)
 ![Language](https://img.shields.io/github/languages/top/DogDayAndroid/Android-Kernel-Builder)
 ![Issues](https://img.shields.io/github/issues/DogDayAndroid/Android-Kernel-Builder)
 ![Pull Requests](https://img.shields.io/github/issues-pr/DogDayAndroid/Android-Kernel-Builder)
-<br>
 
-This Github Action helps you build kernels. It reads multiple kernel sources from a configuration file and builds them using different toolchains. Additionally, it supports patching the kernel with KernelSU and uploading the built kernel image.
+
+这个 Github Action 可以帮助你构建内核。它可以从一个配置文件中读取多个内核源，并使用不同的工具链构建它们。此外，它还支持使用 KernelSU 进行内核补丁，并上传构建好的内核镜像。
 <br>
 
 ---
 
-**[<kbd> <br>  Configure  <br> </kbd>](#configuration-file-syntax)** 
-**[<kbd> <br>  Quick Start  <br> </kbd>](#how-to-use)** 
-**[<kbd> <br>  Local testing  <br> </kbd>](#local-testing)**
+**[<kbd> <br>  配置文件使用方法  <br> </kbd>](#配置文件解析)** 
+**[<kbd> <br>  快速开始  <br> </kbd>](#使用方法)** 
+**[<kbd> <br>  本地构建  <br> </kbd>](#本地构建)**
 
 ---
 </div>
 
 # Github Action
 
-This action contains two jobs: `Set-repos` and `Build-Kernel`.
+该 Action 包含两个作业：`Set-repos` 和 `Build-Kernel`。
 
-The `Set-repos` job reads the kernel sources from the configuration file and outputs them to the `Build-Kernel` job. The `Build-Kernel` job uses the outputted kernel sources to build the kernels and upload the built kernel images.
+Set-repos 作业从配置文件中读取内核源，并将其输出到 Build-Kernel 作业中。Build-Kernel 作业使用输出的内核源构建内核，并上传构建好的内核镜像。
 
-## Trigger
+## 启动方式
 
-| Event name        | Description  |
-| ----------------- | ------------ |
-| workflow_dispatch | Manually run |
+| 事件名称          | 描述           |
+| ----------------- | -------------- |
+| workflow_dispatch | 手动触发构建。 |
 
-## Workflow
+## 构建流程
 
-| Build Step                 | Description                                    |
-| -------------------------- | ---------------------------------------------- |
-| Checkout                   | Check out code                                 |
-| Generate Matrix            | Generate kernel source matrix from config file |
-| Create working dir         | Create working directory                       |
-| Install prerequisites      | Install necessary dependencies for build       |
-| Clone kernel source        | Clone kernel source code                       |
-| Get toolchains             | Get toolchains                                 |
-| Set args                   | Set build arguments                            |
-| Update KernelSU (optional) | Patch kernel with KernelSU                     |
-| Make defconfig             | Generate kernel configuration file             |
-| Build kernel               | Build kernel                                   |
-| Upload Image               | Upload kernel image                            |
-| Upload Image.gz            | Upload compressed kernel image                 |
-| Upload dtb                 | Upload device tree blob file                   |
-| Upload dtbo.img            | Upload device tree overlay file                |
+| 构建步骤               | 描述                       |
+| ---------------------- | -------------------------- |
+| Checkout               | 检出代码                   |
+| Generate Matrix        | 从配置文件中生成内核源矩阵 |
+| Create working dir     | 创建工作目录               |
+| Install prerequisites  | 安装构建所需的依赖项       |
+| Clone kernel source    | 克隆内核源代码             |
+| Get toolchains         | 获取工具链                 |
+| Set args               | 设置构建参数               |
+| Update KernelSU (可选) | 使用 KernelSU 进行内核补丁 |
+| Make defconfig         | 生成内核配置文件           |
+| Build kernel           | 构建内核                   |
+| Upload Image           | 上传内核镜像               |
+| Upload Image.gz        | 上传内核镜像压缩文件       |
+| Upload dtb             | 上传设备树文件             |
+| Upload dtbo.img        | 上传设备树覆盖文件         |
 
-## Configuration File Syntax
+## 配置文件解析
 
-Here is an example configuration file:
+下面是一个基本的配置文件例子:
 
 ```json
 [
@@ -124,95 +122,95 @@ Here is an example configuration file:
 ]
 ```
 
-This JSON code describes a build configuration that includes the following:
+这段 JSON 代码描述了一个构建流程的配置，其中包括以下内容：
 
-| Field Name   | Description                                                                                                                         |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| kernelSource | Information about the kernel source code, including its name, repository URL, branch, and device.                                   |
-| withKernelSU | A boolean value indicating whether the `KernelSU` kernel patch tool was used.                                                       |
-| toolchains   | An array containing information about the required toolchains, including the repository URL, branch, and name.                      |
-| params       | An object containing information about the build parameters, including architecture type, cross-compiler, and compiler information. |
+| 字段名称     | 描述                                                                               |
+| ------------ | ---------------------------------------------------------------------------------- |
+| kernelSource | 内核源代码的相关信息，包括名称、仓库地址、分支和设备类型。                         |
+| withKernelSU | 一个布尔值，表示是否使用了名为 `KernelSU` 的内核补丁工具。                         |
+| toolchains   | 一个数组，包含了需要用到的工具链的相关信息，包括仓库地址、分支和名称。             |
+| params       | 一个对象，包含了构建参数的相关信息，其中包括了架构类型、交叉编译器、编译器等信息。 |
 
-Here's a table of the parameters in the `params` object:
+`params` 对象中的具体参数信息可以用表格展示：
 
-| Parameter Name       | Description                                                                                    |
-| -------------------- | ---------------------------------------------------------------------------------------------- |
-| ARCH                 | The architecture type, in this case `arm64`.                                                   |
-| CROSS_COMPILE        | The cross-compiler prefix, in this case `aarch64-linux-gnu-`.                                  |
-| CROSS_COMPILE_ARM32  | The cross-compiler prefix for 32-bit compatibility support, in this case `arm-linux-gnueabi-`. |
-| CROSS_COMPILE_COMPAT | The cross-compiler prefix for 32-bit compatibility support, in this case `arm-linux-gnueabi-`. |
-| CLANG_TRIPLE         | The clang compiler's triple, in this case `aarch64-linux-gnu-`.                                |
-| AR                   | The archiving program for static libraries, which is empty in this case.                       |
-| CC                   | The C compiler, which is `clang` in this case.                                                 |
+| 参数名称             | 描述                                                                      |
+| -------------------- | ------------------------------------------------------------------------- |
+| ARCH                 | 架构类型，此处为 `arm64`。                                                |
+| CROSS_COMPILE        | 交叉编译器前缀，此处为 `aarch64-linux-gnu-`。                             |
+| CROSS_COMPILE_ARM32  | 用于 32 位兼容支持的交叉编译器前缀，此处为 `arm-linux-gnueabi-`。         |
+| CROSS_COMPILE_COMPAT | 用于指定编译 32 位兼容支持的交叉编译器前缀，此处为 `arm-linux-gnueabi-`。 |
+| CLANG_TRIPLE         | 用于指定 clang 编译器的三元组（triple），此处为 `aarch64-linux-gnu-`。    |
+| AR                   | 用于指定静态库的归档程序，此处为空。                                      |
+| CC                   | 用于指定 C 编译器，此处为 `clang`。                                       |
 
-These configuration details will be used in the build process to automate the creation of specific kernel image files.
+这些配置信息将在构建流程中使用，以自动化地构建出特定的内核镜像文件。
 
-# How to use
+# 使用方法
 
-This project's basic usage is as follows:
+本项目的基础使用方法如下：
 
-1. Fork this project on GitHub.
+1. 在 GitHub 上 `fork` 本项目
 
-2. Modify the `repos.json` file through the Github website or pull it to your local machine and commit the changes.
+2. 通过 Github 网页或者拉取到本地修改 `repos.json` 文件，并提交修改
 
-3. Go to the `Action` page on Github and find `Build kernels`, then `Run workflow`.
+3. 查看 Github 网页的 `Action` 页面，找到 `Build kernels` 并 `Run workflow`
 
-4. Wait for the compilation to finish, then download the compiled product from the corresponding page.
+4. 等待编译完成，即可进入对应页面下载编译产物
 
-5. Use your preferred packaging software to package the kernel ([AnyKernel3](https://github.com/osm0sis/AnyKernel3), [Android-Image-Kitchen](https://github.com/osm0sis/Android-Image-Kitchen), [MagiskBoot](https://github.com/topjohnwu/Magisk/releases), etc.)
+5. 使用您喜欢的打包软件进行内核打包([AnyKernel3](https://github.com/osm0sis/AnyKernel3)、[Android-Image-Kitchen](https://github.com/osm0sis/Android-Image-Kitchen)、[MagiskBoot](https://github.com/topjohnwu/Magisk/releases) 等)
 
 ![Artifacts](./.assets/artifacts.png)
 
-# Local testing
+# 本地构建
 
-If you don't want to run the action on `Github`, you can use [nektos/act](https://github.com/nektos/act) to test this workflow locally and output the files.
+如果您并不想在 `Github` 上重复执行 `Action`，您可以利用 [nektos/act](https://github.com/nektos/act) 来在本地环境里测试本构建流程并输出。
 
-## Normal local build (kernel source code is fetched using Git)
+## 普通本地构建(内核源码等使用 `Git` 拉取)
 
-This is the recommended local testing process. Simply install [nektos/act](https://github.com/nektos/act) and run the following command:
+这种方式是推荐的本地测试流程，您只需要安装 [nektos/act](https://github.com/nektos/act) 并执行如下指令:
 
 ```sh
-# Collect artifacts to /tmp/artifacts folder:
+# 将构建文件收集到 /tmp/artifacts 文件夹：
 act --artifact-server-path /tmp/artifacts
 ```
 
-If you want to store the artifacts in a different location, change `/tmp/artifacts` to your preferred directory.
+如果您需要放在本地你喜欢的位置，请更改 `/tmp/artifacts` 为您喜欢的目录即可。
 
-If there are errors, use the `-v` flag to generate an error report and submit an issue. Here's the command:
+如果中途报错，请加入参数 `-v` 重新执行获取错误报告并提交 `issue` ，具体命令如下:
 
 ```sh
-# Collect artifacts to /tmp/artifacts folder:
+# 将构建文件收集到 /tmp/artifacts 文件夹：
 act --artifact-server-path /tmp/artifacts -v
 ```
 
-## Full local build (kernel source code is stored locally)
+## 完全本地构建(内核源码等均为本地存储)
 
-If you need to perform a completely local build, consider building as follows:
+用上述方式构建仍然需要内核源码等存储在云端，如果您一定有要**全部**本地构建的需求，请考虑通过如下方式构建：
 
-1. Set up a local `Gitea` or `Gitlab` Git service and modify the configuration file address to point to the local service address.
+1. 搭建本地 `Gitea` 或 `Gitlab` 等 `Git` 服务。随后修改配置文件地址为本地服务地址。
 
-2. Use `git daemon` to create a secondary image locally.
+2. 在本地利用 `git daemon` 指令建立一个二级镜像。
 
-This is just a suggestion, and we do not provide a specific guide.
+此处仅仅提供思路，并不提供具体教程。
 
-# Acknowledgments
+# 致谢
 
-- [weishu](https://github.com/tiann) : Developer of KernelSU
-- [AKR Android Developer Community](https://www.akr-developers.com/) ： Provides build tutorials
-- [DogDayAndroid/KSU_Thyme_BuildBot](https://github.com/DogDayAndroid/KSU_Thyme_BuildBot) : Predecessor of this project
-- [xiaoleGun/KernelSU_Action](https://github.com/xiaoleGun/KernelSU_Action) ： Drawing on some Github Actions
-- [UtsavBalar1231/Drone-scripts](https://github.com/UtsavBalar1231/Drone-scripts) ： Drawing on some Github Actions
+- [weishu](https://github.com/tiann) : KernelSU 的开发者
+- [AKR 安卓开发者社区](https://www.akr-developers.com/) ： 编译教程提供
+- [DogDayAndroid/KSU_Thyme_BuildBot](https://github.com/DogDayAndroid/KSU_Thyme_BuildBot) : 此项目的前身
+- [xiaoleGun/KernelSU_Action](https://github.com/xiaoleGun/KernelSU_Action) ： 借鉴部分 Github Action
+- [UtsavBalar1231/Drone-scripts](https://github.com/UtsavBalar1231/Drone-scripts) ： 借鉴部分 Github Action
 
-# Contributor
+# 贡献者
 
 <a href="https://github.com/DogDayAndroid/Android-Kernel-Builder/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=DogDayAndroid/Android-Kernel-Builder" alt="contributors"/>
 </a>
 
-# Star history
+# Star 历史
 
 [![Star History](https://starchart.cc/DogDayAndroid/Android-Kernel-Builder.svg)](https://starchart.cc/DogDayAndroid/Android-Kernel-Builder)
 
-# License
+# 许可
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。
