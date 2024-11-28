@@ -5,7 +5,7 @@
       "branch": "lineage-21",
       "device": "psyche"
     },
-    "withKernelSU": true,
+    "withKernelSU": false,
     "toolchains": [
       {
         "repo": "https://android.googlesource.com/platform/prebuilts/gas/linux-x86",
