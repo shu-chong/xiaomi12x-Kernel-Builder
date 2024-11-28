@@ -1,9 +1,9 @@
 [  {
     "kernelSource": {
-      "name": "12x",
-      "repo": "https://github.com/UtsavBalar1231/kernel_xiaomi_sm8250",
-      "branch": "psyche-r-oss",
-      "device": "psyche"
+      "name": "miku-KernelSU",
+      "repo": "https://github.com/PhamtomK12/kernel_xiaomi_odin",
+      "branch": "TDA",
+      "device": "odin"
     },
     "withKernelSU": true,
     "toolchains": [
