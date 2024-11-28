@@ -1,10 +1,10 @@
 [
   {
     "kernelSource": {
-      "name": "DogDayAndroid",
-      "repo": "https://codeberg.org/DogDayAndroid/android_kernel_xiaomi_thyme",
-      "branch": "lineage-20.0",
-      "device": "thyme"
+      "name": "shuc—12x",
+      "repo": "https://github.com/xiaomi-psyche-development/android_kernel_xiaomi_sm8250",
+      "branch": "lineage-21",
+      "device": "psyche"
     },
     "withKernelSU": false,
     "toolchains": [
@@ -31,10 +31,10 @@
   },
   {
     "kernelSource": {
-      "name": "DogDay-KernelSU",
-      "repo": "https://codeberg.org/DogDayAndroid/android_kernel_xiaomi_thyme",
-      "branch": "lineage-20.0",
-      "device": "thyme"
+      "name": "shuc—12x-Kernelsu",
+      "repo": "https://github.com/xiaomi-psyche-development/android_kernel_xiaomi_sm8250",
+      "branch": "lineage-21",
+      "device": "psyche"
     },
     "withKernelSU": true,
     "toolchains": [
