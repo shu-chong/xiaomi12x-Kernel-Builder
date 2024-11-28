@@ -32,7 +32,7 @@
   {
     "kernelSource": {
       "name": "xiaomi-psyche-development",
-      "repo": "https://github.com/stuartore/device_xiaomi_psyche",
+      "repo": "https://github.com/xiaomi-psyche-development/android_kernel_xiaomi_sm8250",
       "branch": "lineage-21",
       "device": "psyche"
     },
