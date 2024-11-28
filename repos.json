@@ -2,8 +2,8 @@
   {
     "kernelSource": {
       "name": "xiaomi 12X",
-      "repo": "https://github.com/stuartore/device_xiaomi_psyche",
-      "branch": "fourteen",
+      "repo": "https://github.com/xiaomi-psyche-development/android_kernel_xiaomi_sm8250",
+      "branch": "lineage-21",
       "device": "psyche"
     },
     "withKernelSU": false,
@@ -33,7 +33,7 @@
     "kernelSource": {
       "name": "xiaomi 12X",
       "repo": "https://github.com/stuartore/device_xiaomi_psyche",
-      "branch": "fourteen",
+      "branch": "lineage-21",
       "device": "psyche"
     },
     "withKernelSU": true,
