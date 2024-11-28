@@ -1,8 +1,8 @@
 [  {
     "kernelSource": {
-      "name": "12x",
-      "repo": "https://github.com/UtsavBalar1231/kernel_xiaomi_sm8250",
-      "branch": "psyche-r-oss",
+      "name": "12x-lineage21",
+      "repo": "https://github.com/xiaomi-psyche-development/android_kernel_xiaomi_sm8250",
+      "branch": "lineage-21",
       "device": "psyche"
     },
     "withKernelSU": true,
