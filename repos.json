@@ -2,7 +2,7 @@
     "kernelSource": {
       "name": "12x",
       "repo": "https://github.com/UtsavBalar1231/kernel_xiaomi_sm8250",
-      "branch": "android14-stable",
+      "branch": "psyche-r-oss",
       "device": "psyche"
     },
     "withKernelSU": true,
