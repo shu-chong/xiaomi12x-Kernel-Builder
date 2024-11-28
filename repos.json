@@ -1,10 +1,10 @@
 [
   {
     "kernelSource": {
-      "name": "shuc—12x",
-      "repo": "https://github.com/xiaomi-psyche-development/android_kernel_xiaomi_sm8250",
-      "branch": "lineage-21",
-      "device": "psyche"
+      "name": "device/xiaomi/psyche",
+      "repo": "https://github.com/stuartore/device_xiaomi_psyche.git",
+      "branch": "fourteen",
+      "device": "device/xiaomi/psyche"
     },
     "withKernelSU": false,
     "toolchains": [
@@ -31,10 +31,10 @@
   },
   {
     "kernelSource": {
-      "name": "shuc—12x-Kernelsu",
-      "repo": "https://github.com/xiaomi-psyche-development/android_kernel_xiaomi_sm8250",
-      "branch": "lineage-21",
-      "device": "psyche"
+      "name": "device/xiaomi/psyche",
+      "repo": "https://github.com/stuartore/device_xiaomi_psyche.git",
+      "branch": "fourteen",
+      "device": "device/xiaomi/psyche"
     },
     "withKernelSU": true,
     "toolchains": [
